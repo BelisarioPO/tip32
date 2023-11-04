@@ -8,7 +8,10 @@ class Register extends Component {
         this.state={
             email:'',
             userName:'',
-            password:''
+            password:'',
+            miniBio:'',
+            fotoPerfil: ''
+        
         }
     }
     componentDidMount(){
@@ -17,7 +20,7 @@ class Register extends Component {
             console.log(user)
             if( user ){
                 //Redirigir al usuario a la home del sitio.
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Login')
             }
         } ) }
 
@@ -27,6 +30,9 @@ class Register extends Component {
             db.collection('users').add({
                 owner: auth.currentUser.email,
                 userName: userName,
+                password: pass,
+                miniBio: this.state.miniBio,
+                fotoPerfil: this.state.fotoPerfil,
                 createdAt: Date.now(), 
             })
             .then( res => console.log(res))
