@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
 import { db,auth } from '../../firebase/config';
+
 class Home extends Component {
     constructor(){
         super()
@@ -43,6 +44,9 @@ componentDidMount(){
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("Register")}>
                     <Text> Ir a register</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate("Miperfil")}>
+                    <Text> Ir a Mi Perfil</Text>
                 </TouchableOpacity>
             </View>
             
