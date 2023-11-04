@@ -70,6 +70,21 @@ class Register extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                 />
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text)=>this.setState({miniBio: text})}
+                    placeholder='miniBio'
+                    keyboardType='default'
+                    value={this.state.miniBio}
+                    />
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text)=>this.setState({fotoPerfil: text})}
+                    placeholder='fotoPerfil'
+                    keyboardType='default'
+                    value={this.state.fotoPerfil}
+                    />
+                
                 <TouchableOpacity style={styles.button} onPress={()=>this.register(this.state.email, this.state.password, this.state.userName)}>
                     <Text style={styles.textButton}>Registrarse</Text>    
                 </TouchableOpacity>
