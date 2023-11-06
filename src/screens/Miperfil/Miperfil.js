@@ -37,16 +37,17 @@ class Miperfil extends Component {
 
 
     }
-    render() {
-        console.log(this.state);
 
+    render() {
+        return(
         <View style={styles.formContainer}>
             <Text style={styles.textButton}>{this.state.userName}</Text>
-
-
-
-
-        </View>
+            <Text style={styles.textButton}>{this.state.userMiniBio}</Text>
+            <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
+                   <Text>Volver al home</Text>
+                </TouchableOpacity>
+        </View>)
+        
     }
 
 
@@ -55,7 +56,8 @@ const styles = StyleSheet.create({
     formContainer: {
         paddingHorizontal: 10,
         marginTop: 20,
-        backgroundColor: "red",
+        backgroundColor: "#FFF",
+        flex: 1
     },
     input: {
         height: 20,
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
         borderColor: '#28a745'
     },
     textButton: {
-        color: '#fff'
+        color: '#356'
     }
 
 })
