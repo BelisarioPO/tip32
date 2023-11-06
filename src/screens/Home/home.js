@@ -32,7 +32,7 @@ componentDidMount(){
     logout(){
         auth.signOut();
          //Redirigir al usuario a la home del sitio.
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Login')
     }
 
     render(){
@@ -41,6 +41,9 @@ componentDidMount(){
                 <Text>HOME</Text>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("Login")}>
                     <Text> Ir a login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.logout()}>
+                    <Text> Logout</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("Register")}>
                     <Text> Ir a register</Text>
@@ -51,9 +54,6 @@ componentDidMount(){
             </View>
             
 
-
-            
-            
         )
     }
 }

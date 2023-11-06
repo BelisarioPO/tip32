@@ -13,7 +13,7 @@ class Login extends Component {
     }
     //Recordarme
     componentDidMount(){
-        auth.onAuthStateChanged(user => console.log(user);)
+        auth.onAuthStateChanged(user => console.log(user))
     }
     login(email, pass){
         auth.signInWithEmailAndPassword(email, pass)

@@ -17,10 +17,9 @@ class Register extends Component {
     componentDidMount(){
          // ver si el usuario está loguado en firebase
          auth.onAuthStateChanged( user => {
-            console.log(user)
             if( user ){
                 //Redirigir al usuario a la home del sitio.
-                this.props.navigation.navigate('Login')
+                this.props.navigation.navigate('Home')
             }
         } ) }
 
@@ -34,13 +33,15 @@ class Register extends Component {
                 miniBio: this.state.miniBio,
                 fotoPerfil: this.state.fotoPerfil,
                 createdAt: Date.now(), 
+                
             })
             .then( res => console.log(res))
 
              this.setState({registered: true});
           })     
          .catch( error => {
-           this.setState({error: 'Fallo en el registro.'})
+            this.setState({error: error.message})
+            console.log(error)
          })
       }
      
@@ -55,6 +56,7 @@ class Register extends Component {
                     keyboardType='email-address'
                     value={this.state.email}
                     />
+                    <Text>{this.state.error} </Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({userName: text})}
@@ -62,6 +64,7 @@ class Register extends Component {
                     keyboardType='default'
                     value={this.state.userName}
                     />
+
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({password: text})}
