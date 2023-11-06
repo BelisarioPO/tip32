@@ -1,43 +1,86 @@
 import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
-import { db,auth } from '../../firebase/config';
+import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from 'react-native';
+import { db, auth } from '../../firebase/config';
 
-class Miperfil extends Component{
-    constructor(){
+class Miperfil extends Component {
+    constructor() {
         super();
-        this.state={
-            userName:'',
-            userEmail:'',
-            userMiniBio:'',
-            userPfp:'',
+        this.state = {
+            userName: '',
+            userEmail: '',
+            userMiniBio: '',
+            userPfp: '',
             //Contador de posteos del Usuario
 
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         db.collection('users').onSnapshot(
-            infoUser =>{
-                let infoGuardar = [];
-                infoUser.forEach(UnDato =>{
-                    infoGuardar.push({
-                        userName: UnDato.userName, //Se usa currentUser?
-                        userEmail: UnDato.owner,
-                        userMiniBio: UnDato.miniBio,
-                        userPfp: UnDato.fotoPerfil
-                    })
+            infoUser => {    
+                infoUser.forEach(UnDato => {
+                    let info = UnDato.data()
+                    if (info.owner === auth.currentUser.email) {
+                        console.log(info.userName, info.owner)
+                        this.setState({
+                            userName: info.userName,
+                            userEmail: info.owner,
+                            userMiniBio: info.miniBio,
+                            userPfp: info.fotoPerfil
+                        })
+   
+                    }
                 })
+                
             }
         )
-        this.setState({
-            userName: infoGuardar.userName,
-            userEmail: infoGuardar.owner,
-            userMiniBio: infoGuardar.miniBio,
-            userPfp: infoGuardar.fotoPerfil
-        })
+
+
+    }
+    render() {
         console.log(this.state);
+
+        <View style={styles.formContainer}>
+            <Text style={styles.textButton}>{this.state.userName}</Text>
+
+
+
+
+        </View>
     }
 
-}
 
-export default Miperfil
+}
+const styles = StyleSheet.create({
+    formContainer: {
+        paddingHorizontal: 10,
+        marginTop: 20,
+        backgroundColor: "red",
+    },
+    input: {
+        height: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderStyle: 'solid',
+        borderRadius: 6,
+        marginVertical: 10,
+    },
+    button: {
+        backgroundColor: '#28a745',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        textAlign: 'center',
+        borderRadius: 4,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#28a745'
+    },
+    textButton: {
+        color: '#fff'
+    }
+
+})
+
+export default Miperfil;
