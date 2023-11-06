@@ -6,6 +6,7 @@ import Register from './src/screens/Register/Register';
 import Login from './src/screens/Login/Login';
 import Home from './src/screens/Home/Home';
 import Miperfil from './src/screens/Miperfil/Miperfil'
+import Camara from './src/screens/Camara/Camara';
 
 
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name='Register' component={Register} options={ { headerShown: false } }/>
         <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
         <Stack.Screen name='Miperfil' component={Miperfil} options={ { headerShown: false } }/>
+        <Stack.Screen name='Camara' component={Camara} options={ { headerShown: false } }/>
       </Stack.Navigator>
     </NavigationContainer>
 
