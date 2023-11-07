@@ -2,7 +2,7 @@ import react, { Component } from 'react';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
 import { db,auth } from '../../firebase/config';
 
-class Perfil extends component{
+class Perfil extends Component{
     constructor(){
         super();
         this.state={
