@@ -51,6 +51,9 @@ componentDidMount(){
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate("Miperfil")}>
                     <Text> Ir a Mi Perfil</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("SearchUser")}>
+                <Text>Buscar Usuario</Text>
+                </TouchableOpacity>
             </View>
             
 
