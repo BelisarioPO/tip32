@@ -20,7 +20,7 @@ class Login extends Component {
          .then((response) => {
              this.setState({loggedIn: true});
 
-             this.props.navigation.navigate('Home')
+             this.props.navigation.navigate('Header')
          })
          .catch(error => {
            this.setState({error: 'Credenciales inválidas.'})

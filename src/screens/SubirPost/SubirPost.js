@@ -1,6 +1,6 @@
 import react, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import MyCamera from '../../components/My-Camera/My-Camera';
+import MyCamera from '../../components/Camara/Camara';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
 
 class SubirPost extends Component {
@@ -33,7 +33,7 @@ class SubirPost extends Component {
     render(){
         return(
             <View style={styles.formContainer}>
-                <Text>New Post</Text>
+                <Text>Subir Posteo Demencial</Text>
                 {/* Corregir estilos para que se vea bien la cámara */}
                 <MyCamera style={styles.camera} traerUrlDeFoto = {url=>this.traerUrlDeFoto(url)} />
                 <TextInput
@@ -81,10 +81,9 @@ const styles = StyleSheet.create({
         color: '#fff'
     },
     camera:{
-        height: 400,
+        height: 900,
+        width: 900,
     }
-
 })
-
 
 export default SubirPost;

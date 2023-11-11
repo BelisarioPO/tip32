@@ -1,5 +1,5 @@
 import react, { Component } from 'react';
-import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { db, auth } from '../../firebase/config';
 
 class Miperfil extends Component {
@@ -41,6 +41,7 @@ class Miperfil extends Component {
     render() {
         return(
         <View style={styles.formContainer}>
+            <Image style={styles.imagen} source={this.state.userPfp} resizeMode='contain'/>
             <Text style={styles.textButton}>{this.state.userName}</Text>
             <Text style={styles.textButton}>{this.state.userMiniBio}</Text>
             <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
@@ -81,8 +82,11 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: '#356'
-    }
+    },
 
+    imagen: {
+        height: 400,
+    }
 })
 
 export default Miperfil;

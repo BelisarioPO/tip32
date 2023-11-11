@@ -37,6 +37,17 @@ class Perfil extends Component{
         console.log(this.state);
     }
 
+    render() {
+        return(
+        <View style={styles.formContainer}>
+            <Image style={styles.imagen} source={this.state.userPfp} resizeMode='contain'/>
+            <Text style={styles.textButton}>{this.state.userName}</Text>
+            <Text style={styles.textButton}>{this.state.userMiniBio}</Text>
+            <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
+                   <Text>Volver al home</Text>
+                </TouchableOpacity>
+        </View>)
+    }
 }
 
 export default Perfil
