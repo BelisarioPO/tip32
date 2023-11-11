@@ -53,9 +53,9 @@ class SubirPost extends Component {
 
 const styles = StyleSheet.create({
     formContainer:{
-        paddingHorizontal:10,
-        marginTop: 20,
-        flex:6
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input:{
         height:20,
@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
     camera:{
         height: 900,
         width: 900,
+        borderWidth: 1,
+        borderColor: "black",
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })
 
