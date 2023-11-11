@@ -22,7 +22,6 @@ export default function App() {
         <Stack.Screen name='Register' component={Register} options={ { headerShown: false } }/>
         <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
         <Stack.Screen name='Miperfil' component={Miperfil} options={ { headerShown: false } }/>
-        <Stack.Screen name='Camara' component={Camara} options={ { headerShown: false } }/>
         <Stack.Screen name="SearchUser" component={SearchUser} />
       </Stack.Navigator>
     </NavigationContainer>
