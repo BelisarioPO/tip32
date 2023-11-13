@@ -8,12 +8,12 @@ class Posteo extends Component {
         super(props)
         this.state={
             like: false,
-            cantidadDeLikes: this.props.infoPost.datos.likes.length
+            cantidadDeLikes: this.props.infoPost.data.likes
         }
     }
 
     componentDidMount(){
-        if(this.props.infoPost.datos.likes.includes(auth.currentUser.email)){
+        if(this.props.infoPost.data.likes.includes(auth.currentUser.email)){
             this.setState({
                 like: true
             })
@@ -28,7 +28,7 @@ class Posteo extends Component {
     .then( res => {
         this.setState({
             like: true,
-            cantidadDeLikes: this.props.infoPost.datos.likes.length
+            cantidadDeLikes: this.props.infoPost.data.likes.length
         })
     })
     .catch( e => console.log(e))
@@ -43,7 +43,7 @@ class Posteo extends Component {
     .then( res => {
         this.setState({
             like: false,
-            cantidadDeLikes: this.props.infoPost.datos.likes.length
+            cantidadDeLikes: this.props.infoPost.data.likes.length
         })
     })
     .catch( e => console.log(e))
@@ -55,8 +55,8 @@ class Posteo extends Component {
         return(
             <View>
                 <Text>Datos del Post</Text>
-                <Text> Email: {this.props.infoPost.datos.owner}</Text>
-                <Text>Texto: {this.props.infoPost.datos.textoPost}</Text>
+                <Text> Email: {this.props.infoPost.data.owner}</Text>
+                <Text>Texto: {this.props.infoPost.data.textoPost}</Text>
                 <Text>cantidad de likes: {this.state.cantidadDeLikes}</Text>
 
                 {/* If ternario */}

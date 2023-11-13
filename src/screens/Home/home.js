@@ -1,6 +1,7 @@
 import react, { Component } from 'react';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
 import { db,auth } from '../../firebase/config';
+import Posteo from "../../components/Posteo/Posteo"
 
 class Home extends Component {
     constructor(){
@@ -22,7 +23,7 @@ componentDidMount(){
                 })
                 this.setState({
                     listaposts: postsaMostrar,
-                    loading: false
+        
                 })
             })
         })
@@ -54,12 +55,25 @@ componentDidMount(){
                 <TouchableOpacity onPress={() => this.props.navigation.navigate("SearchUser")}>
                 <Text>Buscar Usuario</Text>
                 </TouchableOpacity>
+                <Text>Lista de Posts</Text>
+                {
+                    this.state.listaposts.length === 0 
+                    ?
+                    <Text>Cargando...</Text>
+                    :
+                    <FlatList 
+                        data= {this.state.listaposts}
+                        keyExtractor={ unPost => unPost.id }
+                        renderItem={ ({item}) => <Posteo infoPost = { item } /> }
+                    />
+                }
             </View>
             
 
         )
     }
 }
+
 
 
 

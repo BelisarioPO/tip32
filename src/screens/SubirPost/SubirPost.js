@@ -1,7 +1,7 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import {db, auth } from '../../firebase/config';
-import MyCamera from '../../components/Camara/Camara';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet} from 'react-native';
+import Camara from '../../components/Camara/Camara';
 
 class SubirPost extends Component {
     constructor(){
@@ -20,8 +20,10 @@ class SubirPost extends Component {
             likes:[],
             createdAt: createdAt
         })
-        .then( res => console.log(res))
+        .then( res => this.props.navigation.navigate('Home'))
         .catch( e => console.log(e))
+        
+
     }
 
     traerUrlDeFoto(url){
@@ -35,7 +37,7 @@ class SubirPost extends Component {
             <View style={styles.formContainer}>
                 <Text>Subir Posteo Demencial</Text>
                 {/* Corregir estilos para que se vea bien la cámara */}
-                <MyCamera style={styles.camera} traerUrlDeFoto = {url=>this.traerUrlDeFoto(url)} />
+                <Camara style={styles.camera} traerUrlDeFoto = {url=>this.traerUrlDeFoto(url)} />
                 <TextInput
                     style={styles.input}
                     onChangeText={(text)=>this.setState({textoPost: text})}
