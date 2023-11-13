@@ -1,5 +1,5 @@
 import react, { Component } from 'react';
-import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
+import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList,Image} from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
 
@@ -58,6 +58,7 @@ class Posteo extends Component {
                 <Text> Email: {this.props.infoPost.data.owner}</Text>
                 <Text>Texto: {this.props.infoPost.data.textoPost}</Text>
                 <Text>cantidad de likes: {this.state.cantidadDeLikes}</Text>
+                <Image style={styles.imagen} source={this.props.infoPost.data.fotoUrl} resizeMode='contain'/>
 
                 {/* If ternario */}
                 {this.state.like ? 
@@ -75,6 +76,12 @@ class Posteo extends Component {
         )
     }
 }
+const styles = StyleSheet.create({
+    imagen: {
+        height: 100,
+        width:100
+    }
+})
 
 
 

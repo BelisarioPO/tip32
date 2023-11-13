@@ -50,58 +50,65 @@ class Camara extends Component {
                                 this.props.traerUrlDeFoto(url)
                                 this.setState({
                                     urlInternaFoto: '',
+                                    mostrarCamara: true
                                 })
                             } )
                     })
 
             })
             .catch( e => console.log(e))
+    }
+    borrarFoto(){
 
+
+
+        this.setState({
+            mostrarCamara: true,
+            urlInternaFoto: '',
+        });
     }
 
 
-    render(){
-        return(
-            <View style={ styles.container}>
-
-                {
-                    this.state.permisos ?
-                        this.state.mostrarCamara === false ?
+    render() {
+        return (
+            <View style={styles.container}>
+                {this.state.permisos ? (
+                    this.state.mostrarCamara === false ? (
                         <React.Fragment>
-                            <Image 
-                                source={{uri:this.state.urlInternaFoto}}
-                                style={ styles.cameraBody }
+                            <Image
+                                source={{ uri: this.state.urlInternaFoto }}
+                                style={styles.cameraBody}
                             />
-                            {/* Corregir estilos para que se vea la imagen */}
-                            {/* Corregir estilos para que los botones desaparezcan una vez que el usuario aceptó o canceló el preview */}
-                            <TouchableOpacity onPress={ () => this.guardarFoto() }>
+                            <TouchableOpacity onPress={() => this.guardarFoto()}>
                                 <Text>Aceptar</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={() => this.borrarFoto()}>
                                 <Text>Cancelar</Text>
                             </TouchableOpacity>
                         </React.Fragment>
-                        :
+                    ) : (
                         <React.Fragment>
-                        {/* Corregir estilos para que se vea bien la cámara */}
-                            <Camera 
+                            <Camera
                                 type={Camera.Constants.Type.front}
-                                ref= { metodosDeCamara => this.metodosDeCamara = metodosDeCamara}
-                                style = { styles.cameraBody }
+                                ref={(metodosDeCamara) =>
+                                    (this.metodosDeCamara = metodosDeCamara)
+                                }
+                                style={styles.cameraBody}
                             />
-                            <TouchableOpacity  style = { styles.button } onPress={()=> this.SacarFoto()}>
+                            <TouchableOpacity
+                                style={styles.button}
+                                onPress={() => this.SacarFoto()}
+                            >
                                 <Text>Sacar Foto</Text>
                             </TouchableOpacity>
                         </React.Fragment>
-                    :
+                    )
+                ) : (
                     <Text>La cámara no tiene permisos</Text>
-
-                }
+                )}
             </View>
-        )
+        );
     }
-
-
 }
 
 const styles = StyleSheet.create({
