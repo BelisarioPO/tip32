@@ -11,14 +11,16 @@ class SearchUser extends Component {
     };
   }
 
-  searchUsers = () => {
-    const { searchQuery } = this.state;
+  searchUsers = (text) => {
+
+    this.setState({ searchQuery: text })
+
     const usersDb = db.collection('users');
 
     usersDb
-      .where('userName', '==', searchQuery) // Filtrar por user name
-      .get()
-      .then((querySnapshot) => {
+      .where('userName', '==', text) // Filtrar por user name
+      .onSnapshot((querySnapshot) => {
+        console.log(querySnapshot.metadata);
         const results = [];
 
         querySnapshot.forEach((doc) => {
@@ -28,24 +30,25 @@ class SearchUser extends Component {
             userName: data.userName,
           });
         });
-
+        console.log('test', results);
         if (results.length > 0) {
           this.setState({ searchResults: results });
         } else {
           this.setState({ searchResults: [] });
         }
       })
-      .catch((error) => {
-        console.error('Error al buscar usuarios:', error);
-      });
+      // .catch((error) => {
+      //   console.error('Error al buscar usuarios:', error);
+      // });
   };
 
   render() {
+    console.log(this.state.searchResults);
     return (
       <View>
         <TextInput
           placeholder="Buscar usuario por user name"
-          onChangeText={(text) => this.setState({ searchQuery: text })}
+          onChangeText={(text) => this.searchUsers(text)}
           value={this.state.searchQuery}
         />
         {this.state.searchResults.length === 0 ? (
