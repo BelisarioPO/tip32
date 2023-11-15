@@ -61,7 +61,7 @@ componentDidMount(){
                     ?
                     <Text>Cargando...</Text>
                     :
-                    <FlatList 
+                    <FlatList style={styles.flex}
                         data= {this.state.listaposts}
                         keyExtractor={ unPost => unPost.id }
                         renderItem={ ({item}) => <Posteo infoPost = { item } /> }
@@ -73,6 +73,12 @@ componentDidMount(){
         )
     }
 }
+const styles = StyleSheet.create({
+    formContainer: {
+        flex: 1
+    }
+})
+    
 
 
 

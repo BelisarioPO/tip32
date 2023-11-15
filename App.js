@@ -5,7 +5,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Header from './src/components/Header/Header'
 import Register from './src/screens/Register/Register';
 import Login from './src/screens/Login/Login';
-import Home from './src/screens/Home/Home';
 import Miperfil from './src/screens/Miperfil/Miperfil'
 import SearchUser from './src/screens/SearchUser/SearchUser';
 
@@ -16,7 +15,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
 
-    <NavigationContainer style={styles.container}>
+    <NavigationContainer >
       <Stack.Navigator>
         <Stack.Screen name='Register' component={Register} options={ { headerShown: false } }/>
         <Stack.Screen name='Login' component={Login} options={ { headerShown: false } }/>
