@@ -1,17 +1,19 @@
 import react, { Component } from 'react';
 import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { db, auth } from '../../firebase/config';
+import Posteo from "../../components/Posteo/Posteo"
 
 class Miperfil extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             userName: '',
             userEmail: '',
             userMiniBio: '',
             userPfp: '',
             texto: '',
-            fotoUrl: ''
+            fotoUrl: '',
+            listaposts: []
 
             //Contador de posteos del Usuario
 
@@ -38,12 +40,16 @@ class Miperfil extends Component {
         )
         db.collection('posts').onSnapshot(
             postUser => {    
+                let postsaMostrar = [];
                 postUser.forEach(Unpost => {
                     let info = Unpost.data()
                     if (info.owner === auth.currentUser.email) {
+                        postsaMostrar.push({
+                            id: Unpost.id,
+                            data: Unpost.data()
+                        })
                         this.setState({
-                            fotoUrl: info.fotoUrl,
-                            texto: info.textoPost
+                            listaposts: postsaMostrar,
                         })
                     }
                 })
@@ -55,19 +61,27 @@ class Miperfil extends Component {
     render() {
         console.log(this.state);
         return(
-        <View style={styles.formContainer}>
+        <View style={styles.container}>
             <Image style={styles.imagen} source={this.state.userPfp} resizeMode='contain'/>
-            <Text style={styles.textButton}>{this.state.userName}</Text>
-            <Text style={styles.textButton}>{this.state.userMiniBio}</Text>
-
-            <Text style={styles.textButton}>TUS POSTEOS</Text>
-            <Text style={styles.textButton}>{this.state.texto}</Text>
-            <Image style={styles.imagen} source={this.state.fotoUrl} resizeMode='contain'/>
+            <Text style={styles.headerText}>{this.state.userName}</Text>
+            <Text style={styles.bioText}>{this.state.userMiniBio}</Text>
+            {
+                    this.state.listaposts.length === 0
+                        ?
+                        <Text>Cargando...</Text>
+                        :
+                        <FlatList style={styles.flatList}
+                            data={this.state.listaposts}
+                            keyExtractor={unPost => unPost.id}
+                            renderItem={({ item }) => <Posteo infoPost={item}/>}
+                        />
+                }
 
             
             <TouchableOpacity onPress={ () => this.props.navigation.navigate('Home')}>
-                   <Text>Volver al home</Text>
+                   <Text style={styles.goBackText}>Volver al home</Text>
                 </TouchableOpacity>
+
         </View>)
         
     }
@@ -75,40 +89,51 @@ class Miperfil extends Component {
 
 }
 const styles = StyleSheet.create({
-    formContainer: {
-        paddingHorizontal: 10,
-        marginTop: 20,
-        backgroundColor: "#FFF",
-        flex: 1
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 20,
     },
-    input: {
-        height: 20,
-        paddingVertical: 15,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderStyle: 'solid',
-        borderRadius: 6,
-        marginVertical: 10,
-    },
-    button: {
-        backgroundColor: '#28a745',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        textAlign: 'center',
-        borderRadius: 4,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: '#28a745'
-    },
-    textButton: {
-        color: '#356'
-    },
-
     imagen: {
-        height: 400,
-        width: 400
-    }
-})
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        borderWidth: 2,
+        borderColor: '#333',
+        marginBottom: 20,
+    },
+    headerText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    bioText: {
+        fontSize: 16,
+        color: '#333',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    sectionHeaderText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    postText: {
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 20,
+    },
+    postImage: {
+        width: 300,
+        height: 300,
+        marginBottom: 20,
+    },
+    goBackText: {
+        color: '#356',
+        textDecorationLine: 'underline',
+    },
+});
 
 export default Miperfil;
