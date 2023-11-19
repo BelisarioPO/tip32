@@ -8,68 +8,82 @@ class SearchUser extends Component {
     super();
     this.state = {
       searchQuery: '',
-      searchResults: [],
+      searchResultsUserName: [],
+      searchResultsOwner: [],
       todosUsuariosCDM: [],
     };
   }
 
-componentDidMount(){
-
-  db.collection('users').onSnapshot(
-    usuarios => {
+  componentDidMount() {
+    db.collection('users').onSnapshot((usuarios) => {
       let todosUsuarios = [];
       usuarios.forEach((doc) => {
         const data = doc.data();
         todosUsuarios.push({
           id: doc.id,
           userName: data.userName,
+          owner: data.owner, 
         });
       });
 
-      this.setState({ todosUsuariosCDM: todosUsuarios })
-      console.log(this.state.todosUsuariosCDM)
-    }
-  )
-}
-
-
-  searchUsers = (text) => {
-
-    this.state.todosUsuariosCDM.forEach(unUser => {
-
-      if (this.state.searchQuery.length==0){
-        this.setState({
-          searchResults: []
-        })
-      }
-      if (unUser.userName.includes(this.state.searchQuery)){
-        if (this.state.searchResults.includes(unUser))
-        {null}
-        else{this.state.searchResults.push(unUser)}
-      }
-
-    })
-
+      this.setState({ todosUsuariosCDM: todosUsuarios });
+    });
   }
 
+  search = (text) => {
+    const searchResultsUserName = [];
+    const searchResultsOwner = [];
+
+    this.state.todosUsuariosCDM.forEach((unUser) => {
+      if (text.length === 0) {
+        this.setState({
+          searchResultsUserName: [],
+          searchResultsOwner: [],
+        });
+      }
+
+      if (unUser.userName.includes(text)) {
+        if (!searchResultsUserName.includes(unUser)) {
+          searchResultsUserName.push(unUser);
+        }
+      }
+
+      // Agrega la lógica para la búsqueda por 'owner'
+      if (unUser.owner && unUser.owner.includes(text)) {
+        if (!searchResultsOwner.includes(unUser)) {
+          searchResultsOwner.push(unUser);
+        }
+      }
+    });
+
+    this.setState({
+      searchQuery: text,
+      searchResultsUserName,
+      searchResultsOwner,
+    });
+  };
+
   render() {
-    console.log(this.state.todosUsuariosCDM);
     return (
       <View>
         <TextInput
-          placeholder="Buscar usuario por user name"
-          onChangeText={(text) => (this.searchUsers(text), this.setState({searchQuery:text}))}
+          placeholder="Buscar usuario por user name o email"
+          onChangeText={(text) => this.search(text)}
           value={this.state.searchQuery}
         />
-        {this.state.searchResults.length === 0 ? (
-          <Text>El user name no existe</Text>
+        {this.state.searchResultsUserName.length === 0 && this.state.searchResultsOwner.length === 0 ? (
+          <Text>El user name o email no existe</Text>
         ) : (
           <FlatList
-            data={this.state.searchResults}
+            data={
+              this.state.searchResultsUserName.length > 0
+                ? this.state.searchResultsUserName
+                : this.state.searchResultsOwner
+            }
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View>
-                <Text>{item.userName}</Text>
+                <Text><Text>{item.userName} || {item.owner}</Text></Text>
               </View>
             )}
           />
