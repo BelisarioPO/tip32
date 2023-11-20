@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import { TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { db, auth } from '../../firebase/config';
 import firebase from 'firebase';
@@ -8,7 +8,7 @@ class Posteo extends Component {
         super(props)
         this.state = {
             like: false,
-            cantidadDeLikes: this.props.infoPost.data.likes
+            cantidadDeLikes: this.props.infoPost.data.likes,
         }
     }
 
@@ -18,6 +18,7 @@ class Posteo extends Component {
                 like: true
             })
         }
+        console.log(this.props);
     }
 
 
@@ -70,7 +71,9 @@ class Posteo extends Component {
                         <Text style={styles.buttonText}>Like</Text>
                     </TouchableOpacity>
                 }
-
+                <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate('Comentarios', {id: this.props.infoPost.id})}>
+                    <Text>Comentarios</Text>
+                </TouchableOpacity>
 
             </View>
         )

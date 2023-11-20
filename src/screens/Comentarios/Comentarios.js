@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import {TextInput, TouchableOpacity, View, Text, StyleSheet, FlatList} from 'react-native';
 import { db,auth } from '../../firebase/config';
 import firebase from 'firebase'
@@ -18,9 +18,11 @@ class Comentarios extends Component{
         db.collection('posts')
             .doc(this.props.route.params.id)
             .onSnapshot(doc=> {
+                const comentarios = doc.data().Comentarios
                 this.setState({
-                    cajaComentarios:doc.data().Comentarios
+                    cajaComentarios: comentarios
                 })
+                console.log(comentarios);
             })
         
         db.collection('user').where('owner', '==', auth.currentUser.email).onSnapshot((docs)=>{
@@ -61,7 +63,7 @@ class Comentarios extends Component{
                 <View>
                     <Text>Comentarios Demenciales</Text>
                     <FlatList
-                        data={this.state.cajaComentarios.sort((a, b) => b.createdAt - a.createdAt)}
+                        data= {this.state.cajaComentarios}
                         keyExtractor={(item)=>item.createdAt.toString()}
                         renderItem={({item}) => 
                         <View>
@@ -124,3 +126,7 @@ const styles = StyleSheet.create({
 })
 
 export default Comentarios
+
+//Buenas, Soy Belisario, Si bien logre conectar las pantallas y componentes para que se pueda entrar y comentar algo no logro, por mucho que intente, mostrar los comentarios. Ya intente de todo y si bien comprendo para que sirve cada metodo y propiedad que uso no comprendo en donde me equivoco.
+//Sin embargo logre una gran parte de la logica en donde no te deberia dejar comentar algo vacio y cada post tiene su seccion de comentarios individual. 
+//Intente solucionarlo con Gaston el miercoles y no pude
